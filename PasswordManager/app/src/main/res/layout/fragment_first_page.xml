@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.onboarding.pages.FirstPageFragment">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        android:layout_marginHorizontal="20dp"
+        tools:ignore="contentDescription"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Generate"
+            android:textFontWeight="400"
+            android:fontFamily="@font/bebasneue_regular"
+            android:textAllCaps="true"
+            android:textColor="@color/primary_dark"
+            android:textSize="56sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Secure"
+            android:textFontWeight="400"
+            android:fontFamily="@font/bebasneue_regular"
+            android:textAllCaps="true"
+            android:textColor="@color/primary_pink"
+            android:textSize="56sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Passwords."
+            android:textFontWeight="400"
+            android:fontFamily="@font/bebasneue_regular"
+            android:textAllCaps="true"
+            android:textColor="@color/primary_dark"
+            android:textSize="56sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/secondary"
+            android:textSize="16sp"
+            android:text="Stop using unsecure passwords for your online accounts, level up with OnePass. Get the most secure and difficult-to-crack passwords." />
+
+    </LinearLayout>
+
+</FrameLayout>

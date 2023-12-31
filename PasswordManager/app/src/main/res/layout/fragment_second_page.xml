@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.onboarding.pages.SecondPageFragment">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        android:layout_marginHorizontal="20dp"
+        tools:ignore="contentDescription"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="all your"
+            android:textFontWeight="400"
+            android:fontFamily="@font/bebasneue_regular"
+            android:textAllCaps="true"
+            android:textColor="@color/primary_dark"
+            android:textSize="56sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:text="passwords"
+                android:textFontWeight="400"
+                android:fontFamily="@font/bebasneue_regular"
+                android:textAllCaps="true"
+                android:textColor="@color/primary_pink"
+                android:textSize="56sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="are"
+                android:textFontWeight="400"
+                android:fontFamily="@font/bebasneue_regular"
+                android:textAllCaps="true"
+                android:textColor="@color/primary_dark"
+                android:textSize="56sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="here."
+            android:textFontWeight="400"
+            android:fontFamily="@font/bebasneue_regular"
+            android:textAllCaps="true"
+            android:textColor="@color/primary_dark"
+            android:textSize="56sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/secondary"
+            android:textSize="16sp"
+            android:text="Store and manage all of your passwords from one place. Don’t remember hundreds of passwords, just remember one." />
+
+    </LinearLayout>
+
+</FrameLayout>
