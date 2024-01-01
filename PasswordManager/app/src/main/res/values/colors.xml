@@ -12,4 +12,6 @@
     <color name="primary_pink">#FFFF6464</color>
     <color name="primary_pink_dark">#FFF84A4A</color>
     <color name="secondary">#FFBABABA</color>
+
+    <color name="neutral_input">#FFF1F1F1</color>
 </resources>
