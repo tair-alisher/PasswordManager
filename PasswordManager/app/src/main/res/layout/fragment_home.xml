@@ -80,4 +80,99 @@
         app:layout_constraintEnd_toEndOf="@id/endGuideline"
         app:layout_constraintBottom_toBottomOf="@id/bottomGuideline" />
 
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/searchField"
+        app:layout_constraintBottom_toBottomOf="@id/bottomGuideline"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
+        />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/noResultsGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="noResultsImageView,noResultsTextView,noResultsFullTextView" />
+
+    <ImageView
+        android:id="@+id/noResultsImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_no_results"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintTop_toBottomOf="@id/searchField"
+        app:layout_constraintBottom_toTopOf="@id/noResultsTextView"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
+        android:contentDescription="@string/no_results"
+        />
+    
+    <TextView
+        android:id="@+id/noResultsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_results"
+        android:textSize="16sp"
+        android:textAllCaps="true"
+        android:fontFamily="@font/bebasneue_regular"
+        android:textStyle="bold"
+        android:layout_marginTop="40dp"
+        android:textColor="@color/primary_dark"
+        app:layout_constraintTop_toBottomOf="@id/noResultsImageView"
+        app:layout_constraintBottom_toTopOf="@id/noResultsFullTextView"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
+        />
+
+    <TextView
+        android:id="@+id/noResultsFullTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="We couldn’t find anything. Try searching for something else."
+        android:textColor="@color/secondary"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="10dp"
+        android:textAlignment="center"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/noResultsTextView"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
+        app:layout_constraintBottom_toBottomOf="@id/bottomGuideline"
+        />
+
+    <TextView
+        android:id="@+id/noPasswordsTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="You haven't created any password yet"
+        android:textSize="14sp"
+        android:textAlignment="center"
+        android:textColor="@color/secondary"
+        android:layout_marginHorizontal="10dp"
+        android:visibility="gone"
+        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintTop_toBottomOf="@id/searchField"
+        app:layout_constraintStart_toStartOf="@id/startGuideline"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
+        app:layout_constraintBottom_toBottomOf="@id/bottomGuideline" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add"
+        android:contentDescription="add password"
+        android:layout_margin="10dp"
+        android:adjustViewBounds="true"
+        app:borderWidth="0dp"
+        app:tint="@color/white"
+        android:backgroundTint="@color/primary_pink"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
+        app:layout_constraintBottom_toBottomOf="@id/bottomGuideline" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
