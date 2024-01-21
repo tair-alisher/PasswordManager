@@ -18,42 +18,62 @@ class CreateViewModel @Inject constructor(
     private val addPasswordUseCase: AddPasswordUseCase
 ) : ViewModel() {
 
+    private val _formData = MutableLiveData<Password>()
+    val formData: LiveData<Password> get() = _formData
+
     private val _state = MutableLiveData<ActionResult<Error>>()
     val state: LiveData<ActionResult<Error>> = _state
 
     init {
+        _formData.value = Password(0, "", "", "", "")
         _state.value = ActionResult()
     }
 
-    fun addPassword(name: String, link: String, login: String, password: String) {
-        if (name.isEmpty())
-            _state.postValue(
-                _state.value?.copy(
-                    state = ActionState.FAIL,
-                    data = Error(Field.NAME, FieldError.EMPTY),
-                    error = "Name cannot be empty")
-            )
+    fun updateTitle(title: String) {
+        _formData.postValue(formData.value?.copy(title = title))
 
-        if (password.isEmpty())
-            _state.postValue(
-                _state.value?.copy(
-                    state = ActionState.FAIL,
-                    data = Error(Field.PASSWORD, FieldError.EMPTY),
-                    error = "Password cannot be empty")
-            )
+        if (title.isEmpty()) {
+            _state.postValue(state.value?.copy(
+                state = ActionState.FAIL,
+                data = Error(Field.NAME, FieldError.EMPTY),
+                error = "Name cannot be empty"))
+        }
+    }
 
-        if (login.isEmpty())
-            _state.postValue(
-                _state.value?.copy(
-                    state = ActionState.FAIL,
-                    data = Error(Field.LOGIN, FieldError.EMPTY),
-                    error = "Login cannot be empty")
-            )
+    fun updateLink(link: String) {
+        _formData.postValue(formData.value?.copy(link = link))
+    }
 
+    fun updateLogin(login: String) {
+        _formData.postValue(formData.value?.copy(login = login))
+
+        if (login.isEmpty()) {
+            _state.postValue(state.value?.copy(
+                state = ActionState.FAIL,
+                data = Error(Field.LOGIN, FieldError.EMPTY),
+                error = "Login cannot be empty"))
+        }
+    }
+
+    fun updatePassword(password: String) {
+        _formData.postValue(formData.value?.copy(password = password))
+
+        if (password.isEmpty()) {
+            _state.postValue(state.value?.copy(
+                state = ActionState.FAIL,
+                data = Error(Field.PASSWORD, FieldError.EMPTY),
+                error = "Password cannot be empty"))
+        }
+    }
+
+    fun addPassword() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 addPasswordUseCase.execute(Password(
-                    title = name, link = link, login = login, password = password
+                    title = formData.value!!.title,
+                    link = formData.value!!.link,
+                    login = formData.value!!.login,
+                    password = formData.value!!.password
                 ))
 
                 _state.postValue(_state.value?.copy(state = ActionState.SUCCESS))

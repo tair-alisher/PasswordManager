@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 class GetAllPasswordsUseCase(private val repository: PasswordRepository) {
 
-    fun execute(): Flow<List<Password>> {
+    operator fun invoke(): Flow<List<Password>> {
         return repository.getAll()
     }
 

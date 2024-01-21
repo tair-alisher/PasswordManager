@@ -12,6 +12,10 @@ class PasswordRepositoryImpl @Inject constructor(
     private val passwordDao: PasswordDao
 ) : PasswordRepository {
 
+    override suspend fun getById(id: Int): Password {
+        return passwordDao.getById(id).toModel()
+    }
+
     override fun getAll(): Flow<List<Password>> {
         return passwordDao.getAll().map { items -> items.map { item -> item.toModel() }}
     }

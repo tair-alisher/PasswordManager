@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.passwordmanager.databinding.FragmentCreateBinding
 import com.example.passwordmanager.domain.util.ActionState
+import com.example.passwordmanager.presentation.utils.afterTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,14 +30,25 @@ class CreateFragment : Fragment() {
         binding.backBtn.setOnClickListener {
             findNavController().navigateUp()
         }
+//
+//        vm.formData.observe(viewLifecycleOwner, Observer {formData ->
+//            with (binding) {
+//                titleEdit.setText(formData.title)
+//                linkEdit.setText(formData.link)
+//                loginEdit.setText(formData.login)
+//                passwordEdit.setText(formData.password)
+//            }
+//        })
+
+        with (binding) {
+            titleEdit.afterTextChanged { vm.updateTitle(it) }
+            linkEdit.afterTextChanged { vm.updateLink(it) }
+            loginEdit.afterTextChanged { vm.updateLogin(it) }
+            passwordEdit.afterTextChanged { vm.updatePassword(it) }
+        }
 
         binding.addPasswordBtn.setOnClickListener {
-            vm.addPassword(
-                binding.titleEdit.text.toString(),
-                binding.linkEdit.text.toString(),
-                binding.loginEdit.text.toString(),
-                binding.passwordEdit.text.toString()
-            )
+            vm.addPassword()
         }
 
         vm.state.observe(viewLifecycleOwner, Observer {

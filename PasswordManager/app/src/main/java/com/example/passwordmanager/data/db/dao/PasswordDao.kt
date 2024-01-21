@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface PasswordDao {
 
+    @Query("SELECT * FROM passwords WHERE id = :id")
+    suspend fun getById(id: Int): PasswordEntity
+
     @Query("SELECT * FROM passwords ORDER BY title ASC")
     fun getAll(): Flow<List<PasswordEntity>>
 

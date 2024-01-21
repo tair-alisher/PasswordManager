@@ -4,6 +4,8 @@ import com.example.passwordmanager.domain.model.Password
 import kotlinx.coroutines.flow.Flow
 
 interface PasswordRepository {
+    suspend fun getById(id: Int): Password
+
     fun getAll(): Flow<List<Password>>
 
     suspend fun addPassword(password: Password)
