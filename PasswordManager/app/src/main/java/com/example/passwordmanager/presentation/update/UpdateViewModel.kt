@@ -42,6 +42,7 @@ class UpdateViewModel @Inject constructor(
 
                 _state.value = state.value?.copy(state = ActionState.SUCCESS)
                 _password.value = password
+                _formData.postValue(password)
             }
             catch (ex: Exception) {
                 _state.value = state.value?.copy(state = ActionState.FAIL, message = "Failed to get password information")
@@ -94,7 +95,6 @@ class UpdateViewModel @Inject constructor(
         if (hasError) return
 
         viewModelScope.launch {
-            _formData.value = _formData.value?.copy(id = password.value?.id ?: 0)
             try {
                 updatePasswordUseCase(_formData.value!!)
                 _state.value = state.value?.copy(state = ActionState.MOVE_NEXT, message = "")
