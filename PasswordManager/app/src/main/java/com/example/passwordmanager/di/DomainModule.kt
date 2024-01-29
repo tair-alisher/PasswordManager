@@ -6,6 +6,7 @@ import com.example.passwordmanager.domain.usecase.DeletePasswordUseCase
 import com.example.passwordmanager.domain.usecase.GeneratePasswordUseCase
 import com.example.passwordmanager.domain.usecase.GetAllPasswordsUseCase
 import com.example.passwordmanager.domain.usecase.GetPasswordUseCase
+import com.example.passwordmanager.domain.usecase.SearchPasswordsUseCase
 import com.example.passwordmanager.domain.usecase.UpdatePasswordUseCase
 import dagger.Module
 import dagger.Provides
@@ -17,33 +18,50 @@ import dagger.hilt.android.components.ViewModelComponent
 class DomainModule {
 
     @Provides
-    fun provideGetAllPasswordsUseCase(repository: PasswordRepository): GetAllPasswordsUseCase {
+    fun provideGetAllPasswordsUseCase(
+        repository: PasswordRepository
+    ): GetAllPasswordsUseCase {
         return GetAllPasswordsUseCase(repository)
     }
 
     @Provides
-    fun provideAddPasswordUseCase(repository: PasswordRepository): AddPasswordUseCase {
+    fun provideAddPasswordUseCase(
+        repository: PasswordRepository
+    ): AddPasswordUseCase {
         return AddPasswordUseCase(repository)
     }
 
     @Provides
-    fun provideGetPasswordUseCase(repository: PasswordRepository): GetPasswordUseCase {
+    fun provideGetPasswordUseCase(
+        repository: PasswordRepository
+    ): GetPasswordUseCase {
         return GetPasswordUseCase(repository)
     }
 
     @Provides
-    fun provideUpdatePasswordUseCase(repository: PasswordRepository): UpdatePasswordUseCase {
+    fun provideUpdatePasswordUseCase(
+        repository: PasswordRepository
+    ): UpdatePasswordUseCase {
         return UpdatePasswordUseCase(repository)
     }
 
     @Provides
-    fun provideDeletePasswordUseCase(repository: PasswordRepository): DeletePasswordUseCase {
+    fun provideDeletePasswordUseCase(
+        repository: PasswordRepository
+    ): DeletePasswordUseCase {
         return DeletePasswordUseCase(repository)
     }
 
     @Provides
     fun provideGeneratePasswordUseCase(): GeneratePasswordUseCase {
         return GeneratePasswordUseCase()
+    }
+
+    @Provides
+    fun provideSearchPasswordUseCase(
+        repository: PasswordRepository
+    ): SearchPasswordsUseCase {
+        return SearchPasswordsUseCase(repository)
     }
 
 }

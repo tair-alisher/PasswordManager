@@ -1,13 +1,17 @@
 package com.example.passwordmanager.presentation.home
 
+import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -20,6 +24,7 @@ import com.example.passwordmanager.R
 import com.example.passwordmanager.databinding.FragmentHomeBinding
 import com.example.passwordmanager.domain.model.Password
 import com.example.passwordmanager.domain.util.ActionState
+import com.example.passwordmanager.presentation.utils.afterTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -31,11 +36,14 @@ class HomeFragment : Fragment(), PasswordClickListener {
     private val vm: HomeViewModel by viewModels()
     private lateinit var adapter: HomeAdapter
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        binding.loader.visibility = View.VISIBLE
 
         adapter = HomeAdapter(this)
 
@@ -78,6 +86,52 @@ class HomeFragment : Fragment(), PasswordClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_createFragment)
         }
 
+        binding.searchField.afterTextChanged {
+            if (it.isNotEmpty()) {
+                binding.searchField
+                    .setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        0, 0, R.drawable.ic_delete, 0
+                    )
+            }
+            else {
+                binding.searchField
+                    .setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        0, 0, 0, 0
+                    )
+            }
+        }
+
+        binding.searchField.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val searchVal = binding.searchField.text.toString()
+
+                if (searchVal.isEmpty()) {
+                    vm.loadPasswords()
+                } else {
+                    vm.searchPasswords(searchVal)
+                }
+            }
+            true
+        }
+
+        binding.searchField.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                // Check if touch is on the drawableEnd
+                if (event.rawX >= (binding.searchField.right -
+                            (binding.searchField.compoundDrawables[DRAWABLE_RIGHT]?.bounds?.width() ?: 0) - 20)) {
+                    // Handle click on the drawableEnd
+                    binding.searchField.text.clear()
+                    binding.searchField.clearFocus()
+                    vm.loadPasswords()
+
+                    return@setOnTouchListener true
+                }
+            }
+            return@setOnTouchListener false
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
+
         return binding.root
     }
 
@@ -93,6 +147,20 @@ class HomeFragment : Fragment(), PasswordClickListener {
         clipboard.setPrimaryClip(clip)
 
         Toast.makeText(activity, "Copied!", Toast.LENGTH_SHORT).show()
+    }
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if (binding.searchField.isFocused) {
+                binding.searchField.clearFocus()
+            } else {
+                requireActivity().finishAndRemoveTask()
+            }
+        }
+    }
+
+    companion object {
+        private const val DRAWABLE_RIGHT: Int = 2
     }
 
 }
