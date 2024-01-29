@@ -6,5 +6,10 @@ data class ActionResult<T>(
     val error: String? = null)
 
 enum class ActionState {
-    UNDEFINED, SUCCESS, FAIL, PENDING
+    UNDEFINED, SUCCESS, FAIL, PENDING, MOVE_NEXT
 }
+
+data class ScreenState(
+    val state: ActionState = ActionState.UNDEFINED,
+    val message: String = ""
+)

@@ -39,6 +39,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_back"
+        android:paddingTop="5dip"
+        android:paddingEnd="10dip"
+        android:paddingBottom="10dip"
         app:layout_constraintStart_toStartOf="@id/startGuideline"
         app:layout_constraintTop_toTopOf="@id/topGuideline"
         android:contentDescription="@string/back" />
@@ -114,7 +117,7 @@
         android:inputType="text"
         app:layout_constraintEnd_toStartOf="@+id/endGuideline"
         app:layout_constraintStart_toStartOf="@id/startGuideline"
-        app:layout_constraintTop_toBottomOf="@id/loginLabel" />
+        app:layout_constraintTop_toBottomOf="@id/loginLabel"/>
 
     <TextView
         style="@style/Label"

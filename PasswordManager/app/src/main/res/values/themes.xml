@@ -24,6 +24,13 @@
         <item name="android:layout_marginStart">10dp</item>
     </style>
 
+    <style name="CheckBox" parent="android:Widget.CompoundButton.CheckBox">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/bebasneue_regular</item>
+        <item name="android:textColor">@color/primary_dark</item>
+    </style>
+
     <style name="ItemValue" parent="android:Widget.TextView">
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">16sp</item>

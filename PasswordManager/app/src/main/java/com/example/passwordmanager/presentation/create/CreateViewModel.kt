@@ -9,7 +9,6 @@ import com.example.passwordmanager.domain.usecase.AddPasswordUseCase
 import com.example.passwordmanager.domain.util.ActionResult
 import com.example.passwordmanager.domain.util.ActionState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,61 +18,69 @@ class CreateViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _formData = MutableLiveData<Password>()
-    val formData: LiveData<Password> get() = _formData
 
     private val _state = MutableLiveData<ActionResult<Error>>()
     val state: LiveData<ActionResult<Error>> = _state
 
+    private val _formErrors = MutableLiveData<CreateFormState>()
+    val formErrors: LiveData<CreateFormState> = _formErrors
+
     init {
         _formData.value = Password(0, "", "", "", "")
         _state.value = ActionResult()
+        _formErrors.value = CreateFormState()
     }
 
     fun updateTitle(title: String) {
-        _formData.postValue(formData.value?.copy(title = title))
-
-        if (title.isEmpty()) {
-            _state.postValue(state.value?.copy(
-                state = ActionState.FAIL,
-                data = Error(Field.NAME, FieldError.EMPTY),
-                error = "Name cannot be empty"))
-        }
+        _formData.postValue(_formData.value?.copy(title = title))
     }
 
     fun updateLink(link: String) {
-        _formData.postValue(formData.value?.copy(link = link))
+        _formData.postValue(_formData.value?.copy(link = link))
     }
 
     fun updateLogin(login: String) {
-        _formData.postValue(formData.value?.copy(login = login))
-
-        if (login.isEmpty()) {
-            _state.postValue(state.value?.copy(
-                state = ActionState.FAIL,
-                data = Error(Field.LOGIN, FieldError.EMPTY),
-                error = "Login cannot be empty"))
-        }
+        _formData.postValue(_formData.value?.copy(login = login))
     }
 
     fun updatePassword(password: String) {
-        _formData.postValue(formData.value?.copy(password = password))
+        _formData.postValue(_formData.value?.copy(password = password))
+    }
 
-        if (password.isEmpty()) {
-            _state.postValue(state.value?.copy(
-                state = ActionState.FAIL,
-                data = Error(Field.PASSWORD, FieldError.EMPTY),
-                error = "Password cannot be empty"))
+    private fun validate() {
+        _formErrors.value = CreateFormState()
+
+        if (_formData.value!!.title.isEmpty()) {
+            _formErrors.value = _formErrors.value?.copy(nameError = "Name cannot be empty")
+        }
+
+        if (_formData.value!!.login.isEmpty()) {
+            _formErrors.value = _formErrors.value?.copy(loginError = "Login cannot be empty")
+        }
+
+        if (_formData.value!!.password.isEmpty()) {
+            _formErrors.value = _formErrors.value?.copy(passwordError = "Password cannot be empty")
         }
     }
 
     fun addPassword() {
-        viewModelScope.launch(Dispatchers.IO) {
+        validate()
+
+        val hasError = listOf(
+            _formErrors.value?.nameError,
+            _formErrors.value?.loginError,
+            _formErrors.value?.passwordError
+        ).any { !it.isNullOrEmpty() }
+
+        if (hasError) return
+
+        viewModelScope.launch {
             try {
                 addPasswordUseCase.execute(Password(
-                    title = formData.value!!.title,
-                    link = formData.value!!.link,
-                    login = formData.value!!.login,
-                    password = formData.value!!.password
+                    title = _formData.value!!.title,
+                    link = _formData.value!!.link,
+                    login = _formData.value!!.login,
+                    password = _formData.value!!.password
                 ))
 
                 _state.postValue(_state.value?.copy(state = ActionState.SUCCESS))
@@ -89,15 +96,8 @@ class CreateViewModel @Inject constructor(
 
 }
 
-enum class Field {
-    NAME, LINK, LOGIN, PASSWORD
-}
-
-enum class FieldError {
-    EMPTY,
-}
-
-data class Error(
-    val field: Field? = null,
-    val error: FieldError? = null
+data class CreateFormState(
+    val nameError: String = "",
+    val loginError: String = "",
+    val passwordError: String = ""
 )

@@ -20,8 +20,14 @@ class PasswordRepositoryImpl @Inject constructor(
         return passwordDao.getAll().map { items -> items.map { item -> item.toModel() }}
     }
 
+    override suspend fun update(password: Password) {
+        return passwordDao.update(PasswordEntity(password.id, password.title,
+            password.link, password.login, password.password))
+    }
+
     override suspend fun addPassword(password: Password) {
-        return passwordDao.addPassword(PasswordEntity(password.title, password.link, password.login, password.password))
+        return passwordDao.addPassword(PasswordEntity(password.id, password.title,
+            password.link, password.login, password.password))
     }
 
     override suspend fun deletePassword(id: Int) {

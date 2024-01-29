@@ -8,6 +8,8 @@ interface PasswordRepository {
 
     fun getAll(): Flow<List<Password>>
 
+    suspend fun update(password: Password)
+
     suspend fun addPassword(password: Password)
 
     suspend fun deletePassword(id: Int)
